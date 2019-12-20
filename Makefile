@@ -22,11 +22,12 @@ build:
 
 run:
 	@echo "Run Docker container..."
-	@docker container run --rm -d \
+	@docker container run --rm \
 		-e SEND_TWEET_CONSUMER_KEY="${TWITTER_CONSUMER_KEY}" \
 		-e SEND_TWEET_CONSUMER_SECRET="${TWITTER_CONSUMER_SECRET_KEY}" \
 		-e SEND_TWEET_ACCESS_TOKEN_KEY="${TWITTER_ACCESS_TOKEN_KEY}" \
 		-e SEND_TWEET_ACCESS_TOKEN_SECRET="${TWITTER_ACCESS_TOKEN_SECRET}" \
+		-e GIT_DATA_REPO_URL="${GIT_DATA_REPO_URL}" \
 		--name twitternator \
 		"${DOCKER_HUB_HANDLE}/${DOCKER_IMAGE_NAME}:${BUILD_VERSION}"
 
