@@ -1,3 +1,4 @@
+# BAsed on https://stackoverflow.com/questions/37458287/how-to-run-a-cron-job-inside-a-docker-container
 FROM debian:buster-slim
 LABEL maintainer="ich@weltraumschaf.de"
 
@@ -27,9 +28,9 @@ RUN npm i -g send-tweet
 
 ADD crontab /etc/cron.d/twitternator
 RUN chmod 644 /etc/cron.d/twitternator
-RUN touch /var/log/cron.log
+RUN touch /var/log/twitternator.log
 
 WORKDIR /root
 COPY twitternator.sh .
 
-CMD /root/twitternator.sh init && cron -n && tail -f /var/log/cron.log
+CMD /root/twitternator.sh init && cron -n && tail -f /var/log/twitternator.log

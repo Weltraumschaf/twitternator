@@ -22,7 +22,7 @@ build:
 
 run:
 	@echo "Run Docker container..."
-	@docker container run --rm \
+	@docker container run --rm -d \
 		-e SEND_TWEET_CONSUMER_KEY="${TWITTER_CONSUMER_KEY}" \
 		-e SEND_TWEET_CONSUMER_SECRET="${TWITTER_CONSUMER_SECRET_KEY}" \
 		-e SEND_TWEET_ACCESS_TOKEN_KEY="${TWITTER_ACCESS_TOKEN_KEY}" \
