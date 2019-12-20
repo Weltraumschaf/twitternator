@@ -1,1 +1,1 @@
-* * * * * twitternator /home/twitternator/twitternator.sh cron
+* * * * * root /root/twitternator.sh cron

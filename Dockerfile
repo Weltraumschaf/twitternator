@@ -17,24 +17,19 @@ LABEL org.label-schema.version=$BUILD_VERSION
 LABEL org.label-schema.docker.cmd="docker container run --rm -d -e SEND_TWEET_CONSUMER_KEY=... -e SEND_TWEET_CONSUMER_SECRET=... -e SEND_TWEET_ACCESS_TOKEN_KEY=... -e SEND_TWEET_ACCESS_TOKEN_SECRET=... -e GIT_DATA_REPO_URL=... weltraumschaf/twitternator:${BUILD_VERSION}"
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update \
-    && apt-get install -y locales git cron at nodejs npm
+RUN apt-get update && apt-get install -y \
+    locales git cron at nodejs npm
 
 RUN localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 ENV LANG en_US.utf8
 
 RUN npm i -g send-tweet
 
-# Consider using /var/spool/cron/crontabs/ to store crontab
 ADD crontab /etc/cron.d/twitternator
 RUN chmod 644 /etc/cron.d/twitternator
 RUN touch /var/log/cron.log
 
-RUN useradd -ms /bin/bash twitternator
-USER twitternator
-WORKDIR /home/twitternator
+WORKDIR /root
 COPY twitternator.sh .
 
-ENTRYPOINT [ "./twitternator.sh" , "init" ]
-
-CMD cron && tail -f /var/log/cron.log
+CMD /root/twitternator.sh init && cron -n && tail -f /var/log/cron.log
