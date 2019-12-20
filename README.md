@@ -42,12 +42,6 @@ echo "send-tweet 'Here comes the tweet: https://www.google.de'" | at 12:30 20.12
 
 ## Build and Run
 
-```bash
- docker image build  -t weltraumschaf/twitternator:1.0.0 .
- ```
+Run `make help` to see the available build targets.
 
- ```bash
- bin/send-tweet.sh 'This is a tweet!'
- ```
-
- [send-tweet]: https://npm.taobao.org/package/send-tweet
+[send-tweet]: https://npm.taobao.org/package/send-tweet

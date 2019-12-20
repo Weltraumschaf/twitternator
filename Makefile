@@ -1,7 +1,9 @@
-BUILD_VERSION	:= "1.0.0"
-BUILD_DATE		:= "$(shell date -u +'%Y-%m-%dT%H:%M:%SZ')"
-VCS_REF			:= "$(shell git rev-parse --short HEAD)"
-NO_CACHE		?= "false"
+DOCKER_HUB_HANDLE	:= "weltraumschaf"
+DOCKER_IMAGE_NAME	:= "twitternator"
+BUILD_VERSION		:= "1.0.0"
+BUILD_DATE			:= "$(shell date -u +'%Y-%m-%dT%H:%M:%SZ')"
+VCS_REF				:= "$(shell git rev-parse --short HEAD)"
+NO_CACHE			?= "false"
 
 all: build
 
@@ -16,7 +18,7 @@ build:
 		--build-arg BUILD_DATE="${BUILD_DATE}" \
 		--build-arg BUILD_VERSION="${BUILD_VERSION}" \
 		--build-arg VCS_REF="${VCS_REF}" \
-		-t "weltraumschaf/twitternator:${BUILD_VERSION}" .
+		-t "${DOCKER_HUB_HANDLE}/${DOCKER_IMAGE_NAME}:${BUILD_VERSION}" .
 
 run:
 	@echo "Run Docker container..."
@@ -26,9 +28,13 @@ run:
 		-e SEND_TWEET_ACCESS_TOKEN_KEY="${TWITTER_ACCESS_TOKEN_KEY}" \
 		-e SEND_TWEET_ACCESS_TOKEN_SECRET="${TWITTER_ACCESS_TOKEN_SECRET}" \
 		--name twitternator \
-		"weltraumschaf/twitternator:${BUILD_VERSION}"
+		"${DOCKER_HUB_HANDLE}/${DOCKER_IMAGE_NAME}:${BUILD_VERSION}"
+
+deploy:
+	docker push "${DOCKER_HUB_HANDLE}/${DOCKER_IMAGE_NAME}:${BUILD_VERSION}"
 
 help:
 	@echo "Execute one of these targets:"
 	@echo " - build:       Build the Docker image."
 	@echo " - run:         Run the Docker container."
+	@echo " - deploy:      Deploy Docker image to docker Hub."
