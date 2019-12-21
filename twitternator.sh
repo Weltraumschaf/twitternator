@@ -56,9 +56,10 @@ twitternator_tweet() {
     fi
 
     log "send-tweet: ${tweet}"
-    send-tweet "${tweet}"
+    /usr/local/bin/send-tweet "${tweet}"
 }
 
+log "--<<== TWITTERNATOR ==>>--"
 log "Running as $(whoami) with shell ${SHELL:-n/a}."
 
 case "${CMD}" in
