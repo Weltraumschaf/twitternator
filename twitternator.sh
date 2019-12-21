@@ -51,13 +51,15 @@ twitternator_tweet() {
     tweet="${2:-}"
 
     if [ "${tweet}" = "" ]; then
-        echo "Empty tweet, given ignoring!"
+        log "Empty tweet, given ignoring!"
         exit
     fi
 
     log "send-tweet: ${tweet}"
     send-tweet "${tweet}"
 }
+
+log "Running as $(whoami) with ${SHELL}."
 
 case "${CMD}" in
 init)
