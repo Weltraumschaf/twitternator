@@ -9,5 +9,10 @@ Vagrant.configure("2") do |config|
         apt-get update
         apt-get upgrade -y
         apt-get install -y make
+
+        (
+            cd /vagrant
+            make
+        )
     SHELL
 end
