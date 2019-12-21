@@ -7,6 +7,7 @@ install:
 	apt-get install -y locales git cron at nodejs npm
 	localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 	export LANG="en_US.utf8"
+	timedatectl set-timezone Europe/Berlin
 	npm i -g send-tweet
 	cp crontab /etc/cron.d/twitternator
 	chmod 644 /etc/cron.d/twitternator
