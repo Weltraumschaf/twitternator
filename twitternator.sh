@@ -43,7 +43,7 @@ twitternator_cron() {
         job="${HOME}/bin/twitternator.sh tweet '$tweet'"
 
         log "Submit job '${job}' at ${time}"
-        echo "${job}" | at "${time}"
+        echo "${job}" | at -m "${time}"
     done < "$DATA_FILE"
 }
 
