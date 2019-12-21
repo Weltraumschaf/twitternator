@@ -1,20 +1,20 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 set -eu
 
 # shellcheck source=config.sample disable=SC1091
-source "${HOME}/.config/twitternator"
+. "${HOME}/.config/twitternator"
 
-USAGE="$(basename "${0}") init|cron"
+USAGE="$(basename "${0}") init|cron|tweet"
 CMD="${1:-}"
 DATA_DIR="${HOME}/twitternator-data"
 DATA_FILE="${DATA_DIR}/data.txt"
 
-function log() {
+log() {
     echo "T10R: ${1}"
 }
 
-function twitternator_init() {
+twitternator_init() {
     echo " _____          _ _   _                        _             "
     echo "|_   _|_      _(_) |_| |_ ___ _ __ _ __   __ _| |_ ___  _ __ "
     echo "  | | \ \ /\ / / | __| __/ _ \ '__| '_ \ / _\` | __/ _ \\| '__|"
@@ -26,11 +26,11 @@ function twitternator_init() {
     git clone "${GIT_DATA_REPO_URL}" "${DATA_DIR}"
 }
 
-function twitternator_cron() {
+twitternator_cron() {
     log "Cron ..."
-    pushd "${DATA_DIR}"
+    cd "${DATA_DIR}"
     result=$(git pull)
-    popd
+    cd -
 
     if [ "${result}" = "Already up to date." ]; then
         log "Nothing to do ($result)."
@@ -48,7 +48,7 @@ function twitternator_cron() {
     done < "$DATA_FILE"
 }
 
-function twitternator_tweet() {
+twitternator_tweet() {
     tweet="${2:-}"
 
     if [ "${tweet}" = "" ]; then
