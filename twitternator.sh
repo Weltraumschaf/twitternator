@@ -59,7 +59,7 @@ twitternator_tweet() {
     send-tweet "${tweet}"
 }
 
-log "Running as $(whoami) with ${SHELL}."
+log "Running as $(whoami) with shell ${SHELL:-n/a}."
 
 case "${CMD}" in
 init)
