@@ -28,9 +28,8 @@ twitternator_init() {
 
 twitternator_cron() {
     log "Cron ..."
-    cd "${DATA_DIR}"
-    result=$(git pull)
-    cd -
+
+    result=$(cd "${DATA_DIR}" && git pull)
 
     if [ "${result}" = "Already up to date." ]; then
         log "Nothing to do ($result)."
