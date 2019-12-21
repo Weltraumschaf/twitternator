@@ -1,1 +1,1 @@
-* * * * * root /root/twitternator.sh cron  >> /var/log/twitternator.log 2>&1
+* * * * * root $HOME/bin/twitternator.sh cron  >> /var/log/twitternator.log 2>&1

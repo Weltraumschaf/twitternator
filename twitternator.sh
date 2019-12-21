@@ -2,12 +2,16 @@
 
 set -eu
 
+# shellcheck source=config.sample disable=SC1091
+source "${HOME}/.config/twitternator"
+
 USAGE="$(basename "${0}") init|cron"
 CMD="${1:-}"
 DATA_DIR="${HOME}/twitternator-data"
+DATA_FILE="${DATA_DIR}/data.txt"
 
 function log() {
-    echo "TWITTERNATOR: ${1}"
+    echo "T10R: ${1}"
 }
 
 function twitternator_init() {
@@ -24,23 +28,52 @@ function twitternator_init() {
 
 function twitternator_cron() {
     log "Cron ..."
-    (cd "${DATA_DIR}" && git pull)
+    pushd "${DATA_DIR}"
+    result=$(git pull)
+    popd
+
+    if [ "${result}" = "Already up to date." ]; then
+        log "Nothing to do ($result)."
+        exit 0
+    fi
+
+
+    while IFS= read -r line; do
+        time=$(echo "$line" | cut -d"|" -f1)
+        tweet=$(echo "$line" | cut -d"|" -f2)
+        job="${HOME}/bin/twitternator.sh tweet '$tweet'"
+
+        log "Submit job '${job}' at ${time}"
+        echo "${job}" | at "${time}"
+    done < "$DATA_FILE"
 }
 
-function main() {
-    case "${CMD}" in
-    init)
-        twitternator_init
-        ;;
-    cron)
-        twitternator_cron
-        ;;
-    *)
-        echo "FATAL: No comamnd given!"
-        echo "${USAGE}"
-        exit 1
-        ;;
-    esac
+function twitternator_tweet() {
+    tweet="${2:-}"
+
+    if [ "${tweet}" = "" ]; then
+        echo "Empty tweet, given ignoring!"
+        exit
+    fi
+
+    log "send-tweet: ${tweet}"
+    send-tweet "${tweet}"
 }
 
-main
+case "${CMD}" in
+init)
+    twitternator_init
+    ;;
+cron)
+    twitternator_cron
+    ;;
+tweet)
+    twitternator_tweet "$@"
+    ;;
+*)
+    log "FATAL: No comamnd given!"
+    log "${USAGE}"
+    exit 1
+    ;;
+esac
+
