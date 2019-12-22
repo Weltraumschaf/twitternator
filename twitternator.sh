@@ -6,7 +6,6 @@ set -eu
 . "${HOME}/.config/twitternator"
 
 USAGE="$(basename "${0}") init|cron|tweet"
-CMD="${1:-}"
 DATA_DIR="${HOME}/twitternator-data"
 DATA_FILE="${DATA_DIR}/data.txt"
 
@@ -61,6 +60,7 @@ twitternator_tweet() {
 
 log "--<<== TWITTERNATOR ==>>--"
 log "Running as $(whoami) with shell ${SHELL:-n/a}."
+CMD="${1:-}"
 
 case "${CMD}" in
 init)
