@@ -11,7 +11,7 @@ DATA_DIR="${HOME}/twitternator-data"
 DATA_FILE="${DATA_DIR}/data.txt"
 
 log() {
-    echo "T10R: ${1}"
+    echo "$(date -u +'%Y-%m-%dT%H:%M:%SZ') T10R: ${1}"
 }
 
 twitternator_init() {
