@@ -14,6 +14,16 @@ help                    Prints this help.
 tweet 'Your tweet!'     Sends a tweet.
 EOT
 )
+FIGLET=$(cat <<- EOT
+ _____          _ _   _                        _
+|_   _|_      _(_) |_| |_ ___ _ __ _ __   __ _| |_ ___  _ __
+  | | \ \ /\ / / | __| __/ _ \ '__| '_ \ / _\` | __/ _ \\| '__|
+  | |  \ V  V /| | |_| ||  __/ |  | | | | (_| | || (_) | |
+  |_|   \_/\_/ |_|\__|\__\___|_|  |_| |_|\__,_|\__\___/|_|
+
+EOT
+)
+
 DATA_DIR="${HOME}/twitternator-data"
 DATA_FILE="${DATA_DIR}/data.txt"
 
@@ -21,16 +31,6 @@ log() {
     echo "$(date -u +'%Y-%m-%dT%H:%M:%SZ') T10R: ${1}"
 }
 
-twitternator_init() {
-    echo " _____          _ _   _                        _             "
-    echo "|_   _|_      _(_) |_| |_ ___ _ __ _ __   __ _| |_ ___  _ __ "
-    echo "  | | \ \ /\ / / | __| __/ _ \ '__| '_ \ / _\` | __/ _ \\| '__|"
-    echo "  | |  \ V  V /| | |_| ||  __/ |  | | | | (_| | || (_) | |   "
-    echo "  |_|   \_/\_/ |_|\__|\__\___|_|  |_| |_|\__,_|\__\___/|_|   "
-    echo "                                                             "
-
-    log "Init ..."
-    git clone "${GIT_DATA_REPO_URL}" "${DATA_DIR}"
 }
 
 twitternator_cron() {
@@ -60,6 +60,14 @@ twitternator_help() {
     echo "${HELP}"
     echo
 }
+
+twitternator_init() {
+    echo "${FIGLET}"
+
+    log "Init ${DATA_DIR} from ${GIT_DATA_REPO_URL} ..."
+    git clone "${GIT_DATA_REPO_URL}" "${DATA_DIR}"
+}
+
 twitternator_tweet() {
     tweet="${2:-}"
 
