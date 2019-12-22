@@ -24,6 +24,13 @@ log() {
 
 twitternator_clear() {
     log "Clearing all jobs from atd ..."
+    queue=$(at -l)
+
+    if [ "${queue}" = "" ]; then
+        log "Queue is empty, nothing to do."
+        exit
+    fi
+
     at -l | awk '{printf "%s ", $1}' | xargs atrm
 }
 
