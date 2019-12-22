@@ -28,6 +28,11 @@ twitternator_clear() {
 }
 
 twitternator_cron() {
+    if [ ! -d "${DATA_DIR}" ]; then
+        log "There is no data direcotry at ${DATA_DIR}. Do nothing!"
+        exit 0
+    fi
+
     log "Updating jobs from ${DATA_DIR} ..."
 
     result=$(cd "${DATA_DIR}" && git pull)
