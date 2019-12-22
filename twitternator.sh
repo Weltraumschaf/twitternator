@@ -77,11 +77,11 @@ log "Running as $(whoami) with shell ${SHELL:-n/a}."
 CMD="${1:-}"
 
 case "${CMD}" in
-init)
-    twitternator_init
-    ;;
 cron)
     twitternator_cron
+    ;;
+init)
+    twitternator_init
     ;;
 help)
     twitternator_help
