@@ -44,10 +44,4 @@ echo "send-tweet 'Here comes the tweet: https://www.google.de'" | at 12:30 20.12
 
 Run `make help` to see the available build targets.
 
-Delete all at jobs:
-
-```bash
-at -l | awk '{printf "%s ", $1}' | xargs atrm
-```
-
 [send-tweet]: https://npm.taobao.org/package/send-tweet
