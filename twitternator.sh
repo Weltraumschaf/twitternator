@@ -6,6 +6,14 @@ set -eu
 . "${HOME}/.config/twitternator"
 
 USAGE="$(basename "${0}") init|cron|tweet"
+HELP=$(cat <<- EOT
+clear                   Clears the job queue wit hall tweets to send.
+cron                    Periodic command called by a cron job.
+init                    Initializes Twitternator, must be called once after install.
+help                    Prints this help.
+tweet 'Your tweet!'     Sends a tweet.
+EOT
+)
 DATA_DIR="${HOME}/twitternator-data"
 DATA_FILE="${DATA_DIR}/data.txt"
 
@@ -46,6 +54,12 @@ twitternator_cron() {
     done < "$DATA_FILE"
 }
 
+twitternator_help() {
+    echo "${USAGE}"
+    echo
+    echo "${HELP}"
+    echo
+}
 twitternator_tweet() {
     tweet="${2:-}"
 
@@ -68,6 +82,9 @@ init)
     ;;
 cron)
     twitternator_cron
+    ;;
+help)
+    twitternator_help
     ;;
 tweet)
     twitternator_tweet "$@"
