@@ -28,7 +28,7 @@ twitternator_clear() {
 
     if [ "${queue}" = "" ]; then
         log "Queue is empty, nothing to do."
-        exit
+        return
     fi
 
     at -l | awk '{printf "%s ", $1}' | xargs atrm
@@ -37,7 +37,7 @@ twitternator_clear() {
 twitternator_cron() {
     if [ ! -d "${DATA_DIR}" ]; then
         log "There is no data direcotry at ${DATA_DIR}. Do nothing!"
-        exit 0
+        return
     fi
 
     log "Updating jobs from ${DATA_DIR} ..."
@@ -46,7 +46,7 @@ twitternator_cron() {
 
     if [ "${result}" = "Already up to date." ]; then
         log "Nothing to do ($result)."
-        exit 0
+        return
     fi
 
     twitternator_clear
@@ -78,7 +78,7 @@ twitternator_tweet() {
 
     if [ "${tweet}" = "" ]; then
         log "Empty tweet, given ignoring!"
-        exit
+        return
     fi
 
     log "send-tweet: ${tweet}"
