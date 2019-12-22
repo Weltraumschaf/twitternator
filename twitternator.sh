@@ -27,7 +27,7 @@ twitternator_init() {
 }
 
 twitternator_cron() {
-    log "Cron ..."
+    log "Updating jobs from ${DATA_DIR} ..."
 
     result=$(cd "${DATA_DIR}" && git pull)
 
