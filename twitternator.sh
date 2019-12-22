@@ -5,7 +5,7 @@ set -eu
 # shellcheck source=config.sample disable=SC1091
 . "${HOME}/.config/twitternator"
 
-USAGE="$(basename "${0}") init|cron|tweet"
+USAGE="$(basename "${0}") clear|cron|init|help|tweet"
 HELP=$(cat <<- EOT
 clear                   Clears the job queue wit hall tweets to send.
 cron                    Periodic command called by a cron job.
@@ -22,6 +22,11 @@ log() {
     echo "$(date -u +'%Y-%m-%dT%H:%M:%SZ') T10R: ${1}"
 }
 
+twitternator_clear() {
+    log "Clearing all jobs from atd ..."
+    at -l | awk '{printf "%s ", $1}' | xargs atrm
+}
+
 twitternator_cron() {
     log "Updating jobs from ${DATA_DIR} ..."
 
@@ -32,6 +37,7 @@ twitternator_cron() {
         exit 0
     fi
 
+    twitternator_clear
 
     while IFS= read -r line; do
         time=$(echo "$line" | cut -d"|" -f1)
@@ -74,6 +80,9 @@ CMD="${1:-}"
 case "${CMD}" in
 cron)
     twitternator_cron
+    ;;
+clear)
+    twitternator_clear
     ;;
 init)
     twitternator_init
