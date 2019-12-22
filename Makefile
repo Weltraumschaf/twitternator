@@ -4,7 +4,7 @@ all: install
 install:
 	@echo "Installing ..."
 	apt-get update
-	apt-get install -y locales git cron at nodejs npm
+	apt-get install -y locales cron at nodejs npm
 	localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 	export LANG="en_US.utf8"
 	timedatectl set-timezone Europe/Berlin

@@ -9,7 +9,7 @@ Vagrant.configure("2") do |config|
         export DEBIAN_FRONTEND="noninteractive"
         apt-get update
         apt-get upgrade -y
-        apt-get install -y make
+        apt-get install -y make git
 
         (
             cd /vagrant
