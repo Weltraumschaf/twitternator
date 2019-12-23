@@ -18,7 +18,7 @@ I want a simple solution to automate Tweets. What is my use case? I want to writ
   - `crond` periodically invokes the main script which pulls the data repository and submits `atd` jobs from this data.
   - `atd` calls the main script to send the tweet.
 
-Format of the tweet data file:
+Format of the tweet data file (`data.txt`):
 
 ```text
 HH:MM DD.MM.YYYY|TWEET\n
@@ -34,8 +34,18 @@ Example:
 12:35 20.12.2019|Another Tweet!
 ```
 
-## Build and Run
+## Prerequisites
 
-Run `make help` to see the available build targets.
+- You need a Debian based Linux box with `git` and `make` installed. Tested on Debian Buster. In this repo is a Vagrant file for testing arround.
+- You need Tokens from Twitter.
+
+## Installation
+
+**IMPORTANT**: I'm lazy so everything runs as root. Maybe I do some rework so that it runs as a non-privileged user.
+
+1. Checkout this repo on your target machine.
+2. Copy the `config.sample` to `config` and fill out the gaps. (You need a separate repo with a file `data.txt` for your planned tweets.)
+3. Run `make` to install Twitternator.
+4. Run `twitternator.sh init` as final step.
 
 [send-tweet]: https://npm.taobao.org/package/send-tweet
