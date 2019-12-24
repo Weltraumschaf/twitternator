@@ -48,4 +48,4 @@ Example:
 3. Run `make` to install Twitternator.
 4. Run `twitternator.sh init` as final step.
 
-[send-tweet]: https://npm.taobao.org/package/send-tweet
+[send-tweet]: https://github.com/zacanger/send-tweet
